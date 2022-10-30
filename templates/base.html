@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <title>{% block titulo %}{% endblock %}Blog Pedro</title>
+    {% include 'parciais/_head.html' %} 
+</head>
+
+<body> 
+    {% include 'parciais/_header.html' %}
+    {% include 'parciais/_nav.html' %} 
+
+    <div class="container">
+        {% block conteudo %}{% endblock %}
+    </div>
+
+    {% include 'parciais/_footer.html' %} 
+</body>
+
+</html>

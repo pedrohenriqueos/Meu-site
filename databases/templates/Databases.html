@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<h1> Banco de Dados </h1>
+<p>Existem dois tipos de banco de dados, o relacionado e o não relacionado.
+O relacionado são bancos organizados em tabelas, como exemplo temos: Mysql, Postgresql e Aurora. Este tipo de banco de dados possui uma forma de manipulação de dados (Data Manipulation Language, DML) utilizando os comandos:</p> 
+<ul> 
+    <li><b>SELECT:</b> Usado para selecionar um subgrupo de dados que estão presentes dentro do banco de dados;</li>
+    <li><b>UPDATE:</b> Utilizado para atualizar um ou mais dados do banco;</li>
+    <li><b>INSERT:</b> Adiciona novos dados dentro do banco de dados;</li>
+    <li><b>DELETE:</b> Apaga um ou mais elementos do banco de dados.</li>
+</ul>
+<p>E a forma de construção e definição (Data Definition Language, DDL) de um banco de dados é feito pelos comandos:</p>
+<ul> 
+    <li><b>CREATE:</b> cria uma nova tabela, um novo banco ou um novo usuário;</li>
+    <li><b>ALTER:</b> alterar a coluna de uma tabela;</li>
+    <li><b>DROP:</b> deleta uma tabela;</li>
+    <li><b>TRUNCATE:</b> deleta todos os dados de uma tabela.</li>
+</ul>
+ 
+<p>Para demonstrar como funciona o banco de dados, vou fazer de um jeito diferente, vá para o formulário </p>
+
+<center><a class="btn btn-primary" href="formulario" role="button">Formulário</a></center>
+{% if USERS %}
+    <a class="btn btn-primary" href="usuarios" role="button">Usuários Criados</a>
+{% endif %}
+{% endblock %}

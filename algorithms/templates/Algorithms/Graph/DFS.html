@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <center><h2>Busca em Profundidade</h2></center>
+                <p>Em Grafos a busca em profundidade visita um nó e busca o próximo e visita o próximo encontrado, assim que ele é encontrado.
+                    Quando ele não possui mais nenhum nó para ser visitado ele retorna para o nó que era o pai deste visitado e continua buscando novos nós que ainda não foram visitados.
+                    Gerando o código:
+                </p>
+                <pre>
+                    <code class="language-cplusplus">
+vector< int > G[10000];
+int cor[10000], dist[10000];
+void dfs(int v){
+    cor[v] = 1;
+    for(int u:G[v])
+        if(!cor[u]){
+            dist[u] = dist[v] + 1;
+            dfs(u);
+        }
+}
+                    </code>
+                </pre>
+            </div>
+        </div>
+    </div>
+</article>
+
+{% endblock %}

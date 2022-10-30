@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <center><h2>Busca em Largura</h2></center>
+                <p>Em Grafos a busca em largura busca visitar todos os nós que estão ligados nele, 
+                    antes de passar para uma próxima camada de busca, para isso é necessário armazenar a ordem em que eles serão visitados, 
+                    para manter a ordem dos elementos utiliza-se uma fila para manter a ordem dos nós que devem ser visitados.
+                    Gerando o código:
+                </p>
+                <pre>
+                    <code class="language-cplusplus">
+vector< int > G[10000];
+int cor[10000], dist[10000];
+void bfs(int v){
+	queue<int> q;
+	q.push(v);
+	cor[v]=1;
+	while(!q.empty()){
+		int u=q.front();
+		q.pop();
+		for(int w:G[u])
+            if(!cor[w]){
+                q.push(w);
+                cor[w]=1;
+                dist[w]=dist[u]+1;
+            }
+	}
+}
+                    </code>
+                </pre>
+            </div>
+        </div>
+    </div>
+</article>
+
+{% endblock %}

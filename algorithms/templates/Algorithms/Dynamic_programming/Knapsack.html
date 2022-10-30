@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <center><h2>Mochila</h2></center>
+                <p>O problema da mochila é um dos primeiros algoritmos a se estudar no assunto de programação dinâmica. 
+                    O problema é descrito como, você possui uma mochila e gostaria de colocar a maior valor dentro da mochila, 
+                    porém ela possui um peso máximo que ela aguenta antes de rasgar.
+                </p>
+                <p>Então o objetivo é colocar o maior valor possível da mochila sem que ela rasgue. Logo, vamos pensar nos parâmetros importantes deste problema, que são: 
+                    o peso que a mochila aguenta, qual objeto nós estamos tentando colocar na mochila e qual o valor deste objeto.
+                </p>
+                <p>Agora vamos construir a ideia do problema, dado um objeto devemos escolher entre colocar ou não ele. E para colocar ele a mochila ainda deve aguentar o objeto. 
+                    Criando um condição que <code> peso_objeto <= aguenta_mochila </code> e devemos sempre manter as duas opções, mesmo que ele possa entrar na mochila, não obrigatoriamente
+                    ele pertence ao conjunto de objetos ótimos que irão retornar o maior valor possível dentro da mochila, então deve-se deixar o algoritmo decidir qual é a melhor decisão colocar ele ou não,
+                    para isso é necessários passar pelas duas possibilidades. 
+                </p>
+                <p>Para se definir a tabela de memorização, nós devemos manter apenas os dados essenciais, que pelo lado da mochila nós temos apenas uma informação que é o quanto ela aguenta,
+                     já pelo lado do objeto nós temos o peso dele, o valor dele e qual objeto é, o primeiro, o segundo, ou o terceiro, e assim sucessivamente, representado pelo índice do objeto.
+                     Pelos dados nós temos o peso do objeto, que irá interagir com o quanto a mochila aguenta, o valor dele irá interagir com o nosso resultado final dentro da tabela de memorização, 
+                     com isso sobra apenas o índice do objeto, que além de tudo ele consegue representar o objeto por completo, então nós temos uma tabela de memorização descrita como: <code> tabela[quantidade_objetos][mochila_aguenta] </code>
+                </p>
+                <p>
+                    Como trata-se de uma programação dinâmica, as posições já visitadas possuem o valor ótimo já calculado e possuem o estado base, que no caso é: não ter mais objetos a serem colocados ou a mochila não aguentar mais peso. Com isso temos o código:
+                </p>
+
+                <pre>
+                    <code>
+int peso[MAXobj], valor[MAXobj], tabela[MAXobj][MAXpeso];
+int knapsack(int obj, int aguenta){
+	if(tabela[obj][aguenta] >= 0)
+		return tabela[obj][aguenta];
+	if(obj==N or !aguenta)
+		return tabela[obj][aguenta] = 0;
+	int nao_coloca = knapsack(obj + 1, aguenta);
+	if(peso[obj] <= aguenta){
+		int coloca = valor[obj] + knapsack(obj + 1, aguenta - peso[obj]);
+		return tabela[obj][aguenta] = max( coloca, nao_coloca );
+	}
+	return tabela[obj][aguenta] = nao_coloca;
+}
+                    </code>
+                </pre>
+            </div>
+        </div>
+    </div>
+</article>
+
+{% endblock %}
