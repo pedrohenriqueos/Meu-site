@@ -1,9 +1,9 @@
 from urllib import response
-from winreg import REG_WHOLE_HIVE_VOLATILE
 from django.shortcuts import render
 from .forms import NewData
+from .formslogin import LoginData
 from django.http import HttpResponseRedirect
-from .models import SaveData, ResquestData, RequestAll
+from .models import SaveData, ResquestData, CheckValid, AllData
 
 USERS = []
 
@@ -17,6 +17,7 @@ def formulario(request):
 def create(request):
     form = NewData(request.POST)
     if form.is_valid():
+        username = form.cleaned_data["username"]
         name = form.cleaned_data["name"]
         email = form.cleaned_data["email"]
         password = form.cleaned_data["password"]
@@ -25,9 +26,13 @@ def create(request):
         state = form.cleaned_data["state"]
         cep = form.cleaned_data["cep"]
         check = form.cleaned_data["check"]
-        output = SaveData( name, email, password, address, city, state, cep, check )
-        USERS.append(output['id'])
-        return render(request,"user.html",{'header':"Usuário "+name, 'dados':output})
+        checkvalid = CheckValid(username,password)
+        if checkvalid:
+            output = SaveData(username, name, email, password, address, city, state, cep, check )
+            USERS.append(output['id'])
+            return render(request,"user.html",{'header':"Usuário "+name, 'dados':output})
+        else:
+            return render(request,"errorUser.html")
     return render(request,"error.html")
 
 def user(request, user):
@@ -36,6 +41,15 @@ def user(request, user):
         return render(request,"user.html",{'header':"Usuário "+dados['name'], 'dados':dados})
     return render(request,"NotFound.html",{'header':"Não Encontrado"})
 
+def login(request):
+    form = LoginData()        
+    return render(request,"login.html",{'header':"Login",'form':form})
+
 def usuarios(request):
-    dados = RequestAll(USERS)
-    return render(request,"users.html",{'header':"Usuários", 'USERS':dados})
+    form = LoginData(request.POST)
+    if form.is_valid():
+        username = form.cleaned_data["username"]
+        password = form.cleaned_data["password"]
+        dados = AllData(username, password)
+        return render(request,"users.html",{'header':"Usuários", 'USERS':dados})
+    return render(request,"error.html")

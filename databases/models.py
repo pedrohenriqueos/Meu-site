@@ -5,9 +5,9 @@ from .conf.settings import HOST_DB,PASSWORD_DB,PORT,DB,USER_DB
 connection = pymysql.connect(host=HOST_DB,port=PORT, database=DB, user=USER_DB, password=PASSWORD_DB, cursorclass=pymysql.cursors.DictCursor)
 cursor = connection.cursor()
 
-def SaveData(name,email,password,address,city,state,cep,check):
-    sql = "INSERT INTO User (name,email,password) VALUES(%s,%s,%s)"
-    cursor.execute(sql,(name,email,password))
+def SaveData(username,name,email,password,address,city,state,cep,check):
+    sql = "INSERT INTO User (username,name,email,password) VALUES(%s,%s,%s,%s)"
+    cursor.execute(sql,(username,name,email,password))
     connection.commit()
     
     sql = "SELECT id FROM User WHERE email=%s"
@@ -21,7 +21,7 @@ def SaveData(name,email,password,address,city,state,cep,check):
     sql = "INSERT INTO Data (boxcheck,id_user) VALUES(%s,%s)"
     cursor.execute(sql,(check,id_user['id']))
     connection.commit()
-    out = {"id": id_user['id'], "name": name, "email": email, "password": password, "address": address, "city": city, "state": state, "cep": cep, "check": check}
+    out = {"id": id_user['id'],'username': username, "name": name, "email": email, "password": password, "address": address, "city": city, "state": state, "cep": cep, "check": check}
     return out
 
 def ResquestData(User_id):
@@ -45,3 +45,25 @@ def RequestAll(users_id):
         out = cursor.fetchone()
         values.append(out)
     return values
+
+def AllData(username,password):
+    sql = "SELECT id FROM User WHERE username = %s and password = %s"
+    cursor.execute(sql,(username,password))
+    out = cursor.fetchall()
+    sql = "SELECT name, email, street, number, city, state, zip, boxcheck FROM User INNER JOIN Address ON User.id = Address.id_user INNER JOIN Data ON User.id = Data.id_user WHERE id = %s"
+    values = []
+    for id in out:
+        cursor.execute(sql,(id['id']))
+        out = cursor.fetchone()
+        values.append(out)
+    return values
+        
+def CheckValid(username,password):
+    sql = "SELECT password FROM User WHERE username = %s"
+    cursor.execute(sql,(username))
+    out = cursor.fetchone()
+    if out == None:
+        return True
+    if out['password'] == password:
+        return True
+    return False

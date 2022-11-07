@@ -32,7 +32,8 @@ STATES = (
 )
 
 class NewData(forms.Form):
-    name = forms.CharField(max_length=100)
+    username = forms.CharField(max_length=50)
+    name = forms.CharField(max_length=50)
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput())
     address = forms.CharField()

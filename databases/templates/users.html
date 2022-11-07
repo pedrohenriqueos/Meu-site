@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
+
+{% if not USERS %}
+
+<h1> Nenhum usuário encontrado </h1>
+
+{% else %}
+
 <h1>Usuários criados por você</h1>
 {% for user in USERS %}
     <hr>
@@ -8,4 +15,7 @@
     <p>{{ user.email }}</p>
     <p>{{ user.city }}</p>
 {% endfor %}
+
+{% endif %}
+
 {% endblock %}

@@ -4,16 +4,22 @@
 <form method="post" action="create/">
     {% csrf_token %}
     <p>
-        <label class="form-check-label" for="name">
-            Nome
+        <label class="form-check-label" for="username">
+            Usuário
         </label>
-        {{ form.name }}
+        {{ form.username }}
     </p>
     <p>
         <label class="form-check-label" for="password">
             Senha
         </label>
         {{ form.password }}
+    </p>
+    <p>
+        <label class="form-check-label" for="name">
+            Nome
+        </label>
+        {{ form.name }}
     </p>
     <p>
         <label class="form-check-label" for="email">

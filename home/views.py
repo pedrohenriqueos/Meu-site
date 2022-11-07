@@ -1,12 +1,11 @@
 from django.shortcuts import render 
 import firebase_admin
-from firebase_admin import db
-from firebase_admin import credentials
+from .conf.settings import CERTIFICATE,DATABASEURL
 
-# cred = credentials.Certificate(".firebase/mysite-pedro-firebase-adminsdk-6upkf-a3497584f5.json")
-# app  = firebase_admin.initialize_app(cred, {
-#     'databaseURL': 'https://mysite-pedro-default-rtdb.firebaseio.com'
-# })
+cred = firebase_admin.credentials.Certificate(CERTIFICATE)
+default_app = firebase_admin.initialize_app(cred, {
+	'databaseURL': DATABASEURL
+	})
 
 def home(request): 
     #teste = db.reference('teste').get()

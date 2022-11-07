@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<h1>Faça login</h1>
+<form method="post" action="usuarios/">
+    {% csrf_token %}
+    <p>
+        <label class="form-check-label" for="username">
+            Usuário
+        </label>
+        {{ form.username }}
+    </p>
+    <p>
+        <label class="form-check-label" for="password">
+            senha
+        </label>
+        {{ form.password }}
+    </p>
+    <center>
+        <button type="submit" name="save" class="btn btn-primary">Submit</button>
+    </center>
+</form>
+{% endblock %}
